@@ -52,4 +52,8 @@ live_scylla_occ_filtered_sf <- scylla_occ_filtered_sf %>%
 mapview(scylla_occ_filtered_sf, 
         popup = 
           popupTable(live_scylla_occ_filtered_sf,
-                     zcol = c("user_login", "captive_cultivated", "click_url")))
+                     zcol = c("user_login", "captive_cultivated", "click_url")),
+        map.types = "Esri.WorldImagery")
+
+
+#maybe what i can then do is change colours of points that i think are sus 
