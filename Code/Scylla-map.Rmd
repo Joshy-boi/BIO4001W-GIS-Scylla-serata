@@ -1,0 +1,90 @@
+---
+title: "Scylla-map"
+author: "Joshua Dwyer-Thiem"
+date: "2026-03-05"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Scylla serrata inaturalist occurences South Africa 
+
+load all recquired packages. Please run install.r before this
+
+```{r packages}
+
+library(rinat)
+
+library(tidyverse)
+library(sf)
+
+
+library(mapview)
+
+
+library(leafpop)
+```
+
+
+The next step is then to pull observations from inaturalist
+
+
+```{r inat observation}
+
+scylla_occ_raw <- get_inat_obs(taxon_name = "Scylla serrata",
+                 bounds = c(-34.28581259281925, 21.75014796812208, -27.91336641756689, 33.0660659368720), #coordinates acquired from bounding   box
+                  maxresults = 100)
+```
+
+
+After I have my observation data I then need to filter it. I filtered the observations such that I only kept research grade, wild observations, with fairly accurate co-ordinates. One or two points that had their positions obscured were removed when filtering for positional accuracy. 
+
+```{r filtering data}
+scylla_occ_filtered <- scylla_occ_raw %>% filter(positional_accuracy <100 &
+  latitude <0 &
+                      !is.na(latitude) &
+                      captive_cultivated == "false" &
+                      quality_grade == "research")
+```
+
+
+Occurrence data acquired via rinat takes the form of a data frame. In order to map the occurrences I need to change it to a spatial object. 
+
+```{r changing to spatial object}
+scylla_occ_filtered_sf <- st_as_sf(scylla_occ_filtered, coords= c("longitude", "latitude"), crs =4326  )
+
+class(scylla_occ_filtered)
+```
+
+
+Now That I have my occurence points as a spatial object I can plot the interactive map using map view. Each point on the map will be coloured by its positional accuracy so that users can get an idea of whether the crab is actually inhabiting the space it appears on in the map. When a point is clicked on a pop-up table will display the User id of the person who made the observation, the data at which the observation was made and the link to the original iNaturalist observation. 
+
+In order to make the link accessible I used Jaspers html formatting code below.
+
+```{r formatting for observation link}
+live_scylla_occ_filtered_sf <- scylla_occ_filtered_sf %>%
+  mutate(click_url = paste("<b><a href='", url, "'>Link to iNat observation</a></b>"))
+```
+
+And finally, the moment you've all been waiting for... The code for my map:
+
+
+```{r making the map}
+mapview(
+  scylla_occ_filtered_sf, 
+  zcol = "positional_accuracy", 
+  
+   layer.name = "Positional Accuracy (meters)", 
+ 
+  col.regions = viridisLite::viridis(10),
+  
+  popup = popupTable(
+    live_scylla_occ_filtered_sf, # Use the same object here
+    zcol = c("observed_on", "user_login", "click_url") 
+  ),
+  map.types = "Esri.WorldImagery"
+)
+```
+
