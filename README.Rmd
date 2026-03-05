@@ -18,7 +18,9 @@ _Scylla serrata_ (known commonly as the Mud crab) is a large carnivorous crab th
 
 
 ```{r Scylla serrata, echo= FALSE, out.width="60%", include=TRUE, fig.align='center', fig.cap='Scylla serrata'}
+
 knitr::include_graphics('images/Scylla_serrata.png')
+
 ```
 
 I have created an interactive map of research grade Mud crab occurrences from iNaturalist. Each occurrence point can be clicked on and the link to its iNaturalist observation, the user name of the observer and the date observed will pop up. 
