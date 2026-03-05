@@ -78,7 +78,7 @@ mapview(
   
    layer.name = "Positional Accuracy (meters)", 
  
-  col.regions = viridisLite::viridis(10),
+  col.regions = viridisLite::viridis(15),
   
   popup = popupTable(
     live_scylla_occ_filtered_sf, # Use the same object here
