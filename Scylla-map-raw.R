@@ -47,13 +47,20 @@ class(scylla_occ_filtered)
 live_scylla_occ_filtered_sf <- scylla_occ_filtered_sf %>%
   mutate(click_url = paste("<b><a href='", url, "'>Link to iNat observation</a></b>"))
 
-#making map
 
-mapview(scylla_occ_filtered_sf, 
-        popup = 
-          popupTable(live_scylla_occ_filtered_sf,
-                     zcol = c("user_login", "observed_on", "click_url")),
-        map.types = "Esri.WorldImagery")
+#making the map 
 
-
-#maybe what i can then do is change colours of points that i think are sus 
+mapview(
+  scylla_occ_filtered_sf, 
+  zcol = "positional_accuracy", 
+  
+   layer.name = "Positional Accuracy (meters)", 
+ 
+  col.regions = viridisLite::viridis(10),
+  
+  popup = popupTable(
+    live_scylla_occ_filtered_sf, # Use the same object here
+    zcol = c("observed_on", "user_login", "click_url") 
+  ),
+  map.types = "Esri.WorldImagery"
+)
