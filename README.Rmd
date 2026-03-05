@@ -23,7 +23,7 @@ knitr::include_graphics('images/Scylla_serrata.png')
 
 ```
 
-I have created an interactive map of research grade Mud crab occurrences from iNaturalist. Each occurrence point can be clicked on and the link to its iNaturalist observation, the user name of the observer and the date observed will pop up. Each occurence point is coloured based on its positional accuracy. This was done in order to give the viewer some sense of whether the crab actually occurs in the habitat pictured on the map. 
+I have created an interactive map of research grade Mud crab occurrences from iNaturalist. Each occurrence point can be clicked on and the link to its iNaturalist observation, the user name of the observer and the date observed will pop up. Each occurrence point is coloured based on its positional accuracy. This was done in order to give the viewer some sense of whether the crab actually occurs in the habitat pictured on the map. 
 
 
-The code for my map can be found in my code folder. The markdown document Scylla-map contains my clean code and the raw code script is called Scylla-map-raw. 
+The code for my map can be found in my code folder. All of the required packages are in the install.r file, please run this before running the rest of the code. The markdown document Scylla-map contains my clean code and the raw code script is called Scylla-map-raw. 
